@@ -24,11 +24,13 @@ X = tf.placeholder(tf.float32, name='X')
 Y = tf.placeholder(tf.float32, name='Y')
 
 # Step 3: create weight and bias, initialized to 0
-w = tf.get_variable('weights', initializer=tf.constant(0.0))
+w = tf.get_variable('weights_1', initializer=tf.constant(0.0))
+u = tf.get_variable('weights_2',initializer=tf.constant(0.0))
 b = tf.get_variable('bias', initializer=tf.constant(0.0))
 
 # Step 4: build model to predict Y
-Y_predicted = w * X + b 
+#Y_predicted = w * X + b 
+Y_predicted = w * X*X + u * X +  b 
 
 # Step 5: use the squared error as the loss function
 # you can use either mean squared error or Huber loss
@@ -40,7 +42,7 @@ optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.001).minimize(loss
 
 
 start = time.time()
-writer = tf.summary.FileWriter('./graphs/linear_reg', tf.get_default_graph())
+writer = tf.summary.FileWriter('./graphs/linear_reg/2', tf.get_default_graph())
 with tf.Session() as sess:
 	# Step 7: initialize the necessary variables, in this case, w and b
 	sess.run(tf.global_variables_initializer()) 
@@ -58,12 +60,12 @@ with tf.Session() as sess:
 	writer.close() 
 	
 	# Step 9: output the values of w and b
-	w_out, b_out = sess.run([w, b]) 
+	w_out, u_out, b_out = sess.run([w, u, b]) 
 
 print('Took: %f seconds' %(time.time() - start))
 
 # plot the results
 plt.plot(data[:,0], data[:,1], 'bo', label='Real data')
-plt.plot(data[:,0], data[:,0] * w_out + b_out, 'r', label='Predicted data')
+plt.plot(data[:,0], data[:,0] * data[:,0] * w_out + data[:,0] * u_out + b_out, 'r', label='Predicted data')
 plt.legend()
 plt.show()

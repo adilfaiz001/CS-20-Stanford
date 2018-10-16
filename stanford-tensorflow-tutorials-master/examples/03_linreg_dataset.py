@@ -43,7 +43,7 @@ start = time.time()
 with tf.Session() as sess:
     # Step 7: initialize the necessary variables, in this case, w and b
     sess.run(tf.global_variables_initializer()) 
-    writer = tf.summary.FileWriter('./graphs/linear_reg', sess.graph)
+    writer = tf.summary.FileWriter('./graphs/linear_reg/3', sess.graph)
     
     # Step 8: train the model for 100 epochs
     for i in range(100):
@@ -69,6 +69,6 @@ print('Took: %f seconds' %(time.time() - start))
 # plot the results
 plt.plot(data[:,0], data[:,1], 'bo', label='Real data')
 plt.plot(data[:,0], data[:,0] * w_out + b_out, 'r', label='Predicted data with squared error')
-# plt.plot(data[:,0], data[:,0] * (-5.883589) + 85.124306, 'g', label='Predicted data with Huber loss')
+plt.plot(data[:,0], data[:,0] * (-5.883589) + 85.124306, 'g', label='Predicted data with Huber loss')
 plt.legend()
 plt.show()

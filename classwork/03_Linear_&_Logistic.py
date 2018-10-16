@@ -13,12 +13,6 @@ Following code is for further improvement taught in lecture.
                                             
 '''
 
-""" Solution for simple linear regression example using placeholders
-Created by Chip Huyen (chiphuyen@cs.stanford.edu)
-CS20: "TensorFlow for Deep Learning Research"
-cs20.stanford.edu
-Lecture 03
-"""
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 import time
